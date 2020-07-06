@@ -34,8 +34,8 @@ const App = () => (
     <Container>
       <Switch>
         <Route exact path="/" component={Homepage} />
-        <Route exact path="/movies" component={MoviesPage} />
         <Route path="/movies/:movieId" component={MovieDetailsPage} />
+        <Route path="/movies" component={MoviesPage} />
         <Redirect to="/" />
       </Switch>
     </Container>
