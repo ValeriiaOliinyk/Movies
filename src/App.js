@@ -1,6 +1,8 @@
 import React from 'react';
-import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Container from './components/Container';
+import AppBar from './components/AppBar';
+import routes from './routes';
 import './styles/base.scss';
 
 // Views
@@ -10,33 +12,13 @@ import MovieDetailsPage from './views/MovieDetailsPage';
 
 const App = () => (
   <>
-    <ul className="List">
-      <li className="Item">
-        <NavLink
-          exact
-          to="/"
-          className="NavLink"
-          activeClassName="NavLink--active"
-        >
-          Home
-        </NavLink>
-      </li>
-      <li className="Item">
-        <NavLink
-          to="/movies"
-          className="NavLink"
-          activeClassName="NavLink--active"
-        >
-          Movies
-        </NavLink>
-      </li>
-    </ul>
+    <AppBar />
     <Container>
       <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/movies/:movieId" component={MovieDetailsPage} />
-        <Route path="/movies" component={MoviesPage} />
-        <Redirect to="/" />
+        <Route exact path={routes.home} component={Homepage} />
+        <Route path={routes.movieId} component={MovieDetailsPage} />
+        <Route path={routes.movies} component={MoviesPage} />
+        <Redirect to={routes.home} />
       </Switch>
     </Container>
   </>
