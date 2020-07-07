@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moviesApi from '../services/movies-api';
+import NoRewievs from '../components/NoReview';
 
 class Rewiews extends Component {
   state = {
@@ -28,7 +29,7 @@ class Rewiews extends Component {
             ))}
           </ul>
         ) : (
-          <p>No reviews</p>
+          <NoRewievs />
         )}
       </>
     );

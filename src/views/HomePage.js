@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import Error from '../components/Error';
+import FilmsList from '../components/FilmsList';
 import moviesApi from '../services/movies-api';
 
 class HomePage extends Component {
   state = {
     films: [],
+    error: null,
   };
 
   componentDidMount() {
-    moviesApi.fetchMovies().then(results => this.setState({ films: results }));
+    moviesApi
+      .fetchMovies()
+      .then(results => this.setState({ films: results }))
+      .catch(error => this.setState({ error: error.message }));
   }
 
   render() {
+    const { error, films } = this.state;
     return (
       <>
         <h1>Trending today</h1>
-        <ul>
-          {this.state.films.map(film => (
-            <li key={film.id}>
-              <Link to={`/movies/${film.id}`}>{film.name || film.title}</Link>
-            </li>
-          ))}
-        </ul>
+        {error && <Error text={error} />}
+        <FilmsList films={films} />
       </>
     );
   }

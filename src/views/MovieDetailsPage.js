@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
 import moviesApi from '../services/movies-api';
+import defaultImag from './no-image.jpg';
+import Error from '../components/Error';
 import Cast from './Cast';
 import Rewiews from './Reviews';
 
@@ -13,13 +15,15 @@ class MovieDetailsPage extends Component {
     popularity: null,
     release_date: null,
     id: null,
+    error: null,
   };
 
   componentDidMount() {
     const { movieId } = this.props.match.params;
     moviesApi
       .fetchMoviesDetails(movieId)
-      .then(data => this.setState({ ...data }));
+      .then(data => this.setState({ ...data }))
+      .catch(error => this.setState({ error: error.message }));
   }
   render() {
     const {
@@ -29,6 +33,7 @@ class MovieDetailsPage extends Component {
       genres,
       release_date,
       popularity,
+      error,
     } = this.state;
 
     let realeseYear = null;
@@ -41,44 +46,52 @@ class MovieDetailsPage extends Component {
 
     return (
       <>
-        <h2>
-          {original_title} ({realeseYear})
-        </h2>
-        <p>User Score: {Math.round(popularity)}%</p>
-        {poster_path && (
-          <div className="Image">
-            <img
-              src={`https://image.tmdb.org/t/p/original${poster_path}`}
-              alt={original_title}
+        {error ? (
+          <Error text={error} />
+        ) : (
+          <>
+            <h2>
+              {original_title} ({realeseYear})
+            </h2>
+            <p>User Score: {Math.round(popularity)}%</p>
+            <div className="Image">
+              {poster_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/original${poster_path}`}
+                  alt={original_title}
+                />
+              ) : (
+                <img src={defaultImag} alt={original_title} width="200" />
+              )}
+            </div>
+            <h2>Overview</h2>
+            <p>{overview}</p>
+            <ul>Genres</ul>
+            {genres &&
+              genres.map(genre => <li key={genre.id}>{genre.name}</li>)}
+            <ul>
+              Additional information
+              <li>
+                <Link to={`${match.url}/cast`}>Cast</Link>
+              </li>
+              <li>
+                <Link to={`${match.url}/reviews`}>Rewiews</Link>
+              </li>
+            </ul>
+            <Route
+              path={`${match.path}/cast`}
+              render={props => {
+                return <Cast {...props} />;
+              }}
             />
-          </div>
+            <Route
+              path={`${match.path}/reviews`}
+              render={props => {
+                return <Rewiews {...props} />;
+              }}
+            />
+          </>
         )}
-
-        <h2>Overview</h2>
-        <p>{overview}</p>
-        <ul>Genres</ul>
-        {genres && genres.map(genre => <li key={genre.id}>{genre.name}</li>)}
-        <ul>
-          Additional information
-          <li>
-            <Link to={`${match.url}/cast`}>Cast</Link>
-          </li>
-          <li>
-            <Link to={`${match.url}/reviews`}>Rewiews</Link>
-          </li>
-        </ul>
-        <Route
-          path={`${match.path}/cast`}
-          render={props => {
-            return <Cast {...props} />;
-          }}
-        />
-        <Route
-          path={`${match.path}/reviews`}
-          render={props => {
-            return <Rewiews {...props} />;
-          }}
-        />
       </>
     );
   }

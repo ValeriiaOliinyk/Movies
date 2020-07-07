@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import Error from '../components/Error';
 import moviesApi from '../services/movies-api';
+import Loader from 'react-loader-spinner';
+import Button from '../components/Button';
+import FilmsList from '../components/FilmsList';
 
 class MoviesPage extends Component {
   state = {
@@ -8,6 +11,8 @@ class MoviesPage extends Component {
     films: [],
     currentPage: 1,
     searchMovie: '',
+    isLoading: false,
+    error: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -26,12 +31,19 @@ class MoviesPage extends Component {
       currentPage,
       searchMovie,
     };
-    moviesApi.fetchMoviesPage(options).then(results =>
-      this.setState(prevState => ({
-        films: [...prevState.films, ...results],
-        currentPage: prevState.currentPage + 1,
-      })),
-    );
+
+    this.setState({ isLoading: true });
+
+    moviesApi
+      .fetchMoviesPage(options)
+      .then(results =>
+        this.setState(prevState => ({
+          films: [...prevState.films, ...results],
+          currentPage: prevState.currentPage + 1,
+        })),
+      )
+      .catch(error => this.setState({ error: error.message }))
+      .finally(() => this.setState({ isLoading: false }));
   };
 
   handelInputChange = e => {
@@ -52,7 +64,8 @@ class MoviesPage extends Component {
   };
 
   render() {
-    const { inputValue } = this.state;
+    const { inputValue, isLoading, error, films } = this.state;
+    const shouldRenderLoadMoreBtn = films.length > 0 && !isLoading;
     return (
       <>
         <form onSubmit={this.handleSubmit}>
@@ -66,16 +79,18 @@ class MoviesPage extends Component {
             <span>Search</span>
           </button>
         </form>
-        <ul>
-          {this.state.films.map(film => (
-            <li key={film.id}>
-              <Link to={`/movies/${film.id}`}>{film.name || film.title}</Link>
-            </li>
-          ))}
-        </ul>
-        <button type="submit" onClick={this.fetchMovies}>
-          <span>Load more</span>
-        </button>
+
+        {error ? (
+          <Error text={error} />
+        ) : (
+          <>
+            <FilmsList films={films} />
+            {shouldRenderLoadMoreBtn && <Button onClick={this.fetchMovies} />}
+          </>
+        )}
+        {isLoading && (
+          <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
+        )}
       </>
     );
   }
