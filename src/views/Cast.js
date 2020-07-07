@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import moviesApi from '../services/movies-api';
 import defaultImag from './no-image.jpg';
-
-const apiKey = '5817c6dd8032bda95a06a4a1b329e19e';
-const baseUrl = 'https://api.themoviedb.org/3/';
 
 class Cast extends Component {
   state = {
     cast: [],
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { movieId } = this.props.match.params;
-    const response = await axios.get(
-      `${baseUrl}movie/${movieId}/credits?api_key=${apiKey}`,
-    );
-    this.setState({ cast: response.data.cast });
+    moviesApi.fetchCast(movieId).then(cast => this.setState({ cast: cast }));
   }
 
   render() {

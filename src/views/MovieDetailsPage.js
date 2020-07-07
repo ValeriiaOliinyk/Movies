@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
-import axios from 'axios';
+import moviesApi from '../services/movies-api';
 import Cast from './Cast';
 import Rewiews from './Reviews';
-
-const apiKey = '5817c6dd8032bda95a06a4a1b329e19e';
-const baseUrl = 'https://api.themoviedb.org/3/';
 
 class MovieDetailsPage extends Component {
   state = {
@@ -18,12 +15,11 @@ class MovieDetailsPage extends Component {
     id: null,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { movieId } = this.props.match.params;
-    const response = await axios.get(
-      `${baseUrl}movie/${movieId}?api_key=${apiKey}`,
-    );
-    this.setState({ ...response.data });
+    moviesApi
+      .fetchMoviesDetails(movieId)
+      .then(data => this.setState({ ...data }));
   }
   render() {
     const {

@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-
-const apiKey = '5817c6dd8032bda95a06a4a1b329e19e';
-const baseUrl = 'https://api.themoviedb.org/3/';
+import moviesApi from '../services/movies-api';
 
 class HomePage extends Component {
   state = {
     films: [],
   };
 
-  async componentDidMount() {
-    const response = await axios.get(
-      `${baseUrl}trending/all/day?api_key=${apiKey}`,
-    );
-    this.setState({ films: response.data.results });
+  componentDidMount() {
+    moviesApi.fetchMovies().then(results => this.setState({ films: results }));
   }
 
   render() {

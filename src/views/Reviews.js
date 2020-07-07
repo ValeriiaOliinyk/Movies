@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
-const apiKey = '5817c6dd8032bda95a06a4a1b329e19e';
-const baseUrl = 'https://api.themoviedb.org/3/';
+import moviesApi from '../services/movies-api';
 
 class Rewiews extends Component {
   state = {
     reviews: [],
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { movieId } = this.props.match.params;
-    const response = await axios.get(
-      `${baseUrl}movie/${movieId}/reviews?api_key=${apiKey}`,
-    );
-    this.setState({ reviews: response.data.results });
-    console.log(response.data.results);
+
+    moviesApi
+      .fetchReviews(movieId)
+      .then(results => this.setState({ reviews: results }));
   }
 
   render() {
