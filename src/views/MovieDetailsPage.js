@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
 import axios from 'axios';
 import Cast from './Cast';
+import Rewiews from './Reviews';
 
 const apiKey = '5817c6dd8032bda95a06a4a1b329e19e';
 const baseUrl = 'https://api.themoviedb.org/3/';
@@ -14,7 +15,9 @@ class MovieDetailsPage extends Component {
     genres: null,
     popularity: null,
     release_date: null,
+    id: null,
   };
+
   async componentDidMount() {
     const { movieId } = this.props.match.params;
     const response = await axios.get(
@@ -38,7 +41,7 @@ class MovieDetailsPage extends Component {
       realeseYear = release_date.slice(0, 4);
     }
 
-    console.log(this.props.match.url);
+    const { match } = this.props;
 
     return (
       <>
@@ -59,14 +62,26 @@ class MovieDetailsPage extends Component {
         <p>{overview}</p>
         <ul>Genres</ul>
         {genres && genres.map(genre => <li key={genre.id}>{genre.name}</li>)}
-        <ul>Additional information</ul>
-        <li>
-          <Link to={`${this.props.match.url}/cast`}>Cast</Link>
-        </li>
-
+        <ul>
+          Additional information
+          <li>
+            <Link to={`${match.url}/cast`}>Cast</Link>
+          </li>
+          <li>
+            <Link to={`${match.url}/reviews`}>Rewiews</Link>
+          </li>
+        </ul>
         <Route
-          path={`${this.props.match.url}/cast`}
-          render={() => <h1>Hi</h1>}
+          path={`${match.path}/cast`}
+          render={props => {
+            return <Cast {...props} />;
+          }}
+        />
+        <Route
+          path={`${match.path}/reviews`}
+          render={props => {
+            return <Rewiews {...props} />;
+          }}
         />
       </>
     );
