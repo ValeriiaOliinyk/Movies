@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Error from '../components/Error';
 import moviesApi from '../services/movies-api';
-import Loader from 'react-loader-spinner';
+import MainLoader from '../components/MainLoader';
 import Button from '../components/Button';
 import FilmsList from '../components/FilmsList';
 
@@ -88,9 +88,7 @@ class MoviesPage extends Component {
             {shouldRenderLoadMoreBtn && <Button onClick={this.fetchMovies} />}
           </>
         )}
-        {isLoading && (
-          <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
-        )}
+        {isLoading && <MainLoader />}
       </>
     );
   }

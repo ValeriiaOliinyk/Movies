@@ -1,0 +1,9 @@
+@import 'styles/shared';
+
+.FilmsList {
+  padding: 40px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 25px;
+}

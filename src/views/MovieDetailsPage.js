@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
 import moviesApi from '../services/movies-api';
-import defaultImag from './no-image.jpg';
+import defaultImag from '../images/no-image.jpg';
 import Error from '../components/Error';
 import Cast from './Cast';
 import Rewiews from './Reviews';
+import routes from '../routes';
 
 class MovieDetailsPage extends Component {
   state = {
@@ -25,6 +26,15 @@ class MovieDetailsPage extends Component {
       .then(data => this.setState({ ...data }))
       .catch(error => this.setState({ error: error.message }));
   }
+
+  handelGoBack = () => {
+    const { location, history } = this.props;
+    if (location.state && location.state.from) {
+      return history.push(location.state.from);
+    }
+    history.push(routes.home);
+  };
+
   render() {
     const {
       poster_path,
@@ -50,6 +60,9 @@ class MovieDetailsPage extends Component {
           <Error text={error} />
         ) : (
           <>
+            <button type="button" onClick={this.handelGoBack}>
+              Back
+            </button>
             <h2>
               {original_title} ({realeseYear})
             </h2>

@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
 import './MainLoader.scss';
 
-const MainLoader = ({ children }) => <div className="Loader">{children}</div>;
-
-MainLoader.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+const MainLoader = () => (
+  <div className="Loader">
+    <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
+  </div>
+);
 
 export default MainLoader;

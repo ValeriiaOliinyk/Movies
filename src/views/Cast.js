@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moviesApi from '../services/movies-api';
-import defaultImag from './no-image.jpg';
+import defaultImag from '../images/no-image.jpg';
 
 class Cast extends Component {
   state = {

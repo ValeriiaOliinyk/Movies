@@ -20,7 +20,7 @@ class HomePage extends Component {
     const { error, films } = this.state;
     return (
       <>
-        <h1>Trending today</h1>
+        <h1 className="Title">Trending today</h1>
         {error && <Error text={error} />}
         <FilmsList films={films} />
       </>
