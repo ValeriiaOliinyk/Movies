@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import defaultImag from '../../images/no-image.jpg';
 import './FilmsPreview.scss';
 
@@ -25,6 +26,18 @@ const FilmsPreview = ({ poster_path, original_title, name }) => {
       </div>
     </div>
   );
+};
+
+FilmsPreview.defaultProps = {
+  poster_path: '',
+  original_title: '',
+  name: '',
+};
+
+FilmsPreview.propTypes = {
+  poster_path: PropTypes.string,
+  original_title: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default FilmsPreview;

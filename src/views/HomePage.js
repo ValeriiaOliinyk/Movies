@@ -2,8 +2,17 @@ import React, { Component } from 'react';
 import Error from '../components/Error';
 import FilmsList from '../components/FilmsList';
 import moviesApi from '../services/movies-api';
+import PropTypes from 'prop-types';
 
 class HomePage extends Component {
+  static defaultProps = {
+    films: [],
+  };
+
+  static propTypes = {
+    films: PropTypes.array,
+  };
+
   state = {
     films: [],
     error: null,

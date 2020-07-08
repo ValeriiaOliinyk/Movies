@@ -87,7 +87,6 @@ class MovieDetailsPage extends Component {
                   </p>
                   <h2>Overview</h2>
                   <p className="Movie__overview">{overview}</p>
-
                   <ul className="Movie__genres">
                     Genres :
                     {genres &&
