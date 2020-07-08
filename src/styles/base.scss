@@ -17,7 +17,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   color: $titles-color;
-  background-color: #fff;
+  background-color: $white-color;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -36,6 +36,7 @@ ul {
 
 a:hover {
   text-decoration: none;
+  color: $hover-color;
 }
 
 .Header {
@@ -46,29 +47,25 @@ a:hover {
   display: flex;
   align-items: center;
   box-shadow: 0px 0px 9px -2px rgba(0, 0, 0, 0.75);
+  background-color: $white-color;
 }
 
 .Item:first-child {
-  margin-left: 30px;
+  margin-left: 60px;
 }
 
 .Item + .Item {
-  margin-left: 30px;
+  margin-left: 60px;
 }
 
 .NavLink {
   font-size: 28px;
-  color: $accent-color;
-  text-decoration: none;
+  color: $main-color;
   font-weight: 600;
 }
 
 .NavLink--active {
-  color: $main-color;
-}
-
-.Image {
-  width: 200px;
+  color: $text-color;
 }
 
 .Title {

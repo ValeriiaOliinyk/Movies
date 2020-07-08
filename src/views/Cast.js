@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moviesApi from '../services/movies-api';
 import defaultImag from '../images/no-image.jpg';
+import '../styles/cast.scss';
 
 class Cast extends Component {
   state = {
@@ -15,7 +16,7 @@ class Cast extends Component {
   render() {
     const { cast } = this.state;
     return (
-      <ul>
+      <ul className="Cast__list">
         {cast &&
           cast.map(actor => (
             <li key={actor.id}>
@@ -25,13 +26,19 @@ class Cast extends Component {
                     src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
                     alt={actor.name}
                     width="200"
+                    className="Cast__images"
                   />
                 ) : (
-                  <img src={defaultImag} alt={actor.name} width="200" />
+                  <img
+                    src={defaultImag}
+                    alt={actor.name}
+                    width="200"
+                    className="Cast__images"
+                  />
                 )}
               </div>
-              <p>{actor.name}</p>
-              <p>Character: {actor.character}</p>
+              <p className="Cast__name">{actor.name}</p>
+              <p className="Cast__character">Character: {actor.character}</p>
             </li>
           ))}
       </ul>

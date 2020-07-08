@@ -4,6 +4,7 @@ import moviesApi from '../services/movies-api';
 import MainLoader from '../components/MainLoader';
 import Button from '../components/Button';
 import FilmsList from '../components/FilmsList';
+import '../styles/search.scss';
 
 class MoviesPage extends Component {
   state = {
@@ -68,15 +69,16 @@ class MoviesPage extends Component {
     const shouldRenderLoadMoreBtn = films.length > 0 && !isLoading;
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
+        <form className="SearchForm" onSubmit={this.handleSubmit}>
           <input
             type="text"
-            placeholder="Search movies"
+            placeholder="Search movies..."
             value={inputValue}
             onChange={this.handelInputChange}
+            className="SearchForm-input"
           />
-          <button type="submit">
-            <span>Search</span>
+          <button type="submit" className="SearchForm-button">
+            <span className="SearchForm-button-label">Search</span>
           </button>
         </form>
 

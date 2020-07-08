@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import moviesApi from '../services/movies-api';
 import defaultImag from '../images/no-image.jpg';
 import Error from '../components/Error';
+import IconButton from '../components/IconButton';
+import { ReactComponent as BackIcon } from '../images/arrow.svg';
 import Cast from './Cast';
 import Rewiews from './Reviews';
 import routes from '../routes';
+import '../styles/movie.scss';
 
 class MovieDetailsPage extends Component {
   state = {
@@ -60,37 +63,63 @@ class MovieDetailsPage extends Component {
           <Error text={error} />
         ) : (
           <>
-            <button type="button" onClick={this.handelGoBack}>
-              Back
-            </button>
-            <h2>
-              {original_title} ({realeseYear})
-            </h2>
-            <p>User Score: {Math.round(popularity)}%</p>
-            <div className="Image">
-              {poster_path ? (
-                <img
-                  src={`https://image.tmdb.org/t/p/original${poster_path}`}
-                  alt={original_title}
-                />
-              ) : (
-                <img src={defaultImag} alt={original_title} width="200" />
-              )}
+            <div className="Movie">
+              <IconButton onClick={this.handelGoBack}>
+                <BackIcon width="40" fill="white" />
+              </IconButton>
+              <div className="Movie__box">
+                <div className="Movie__image">
+                  {poster_path ? (
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${poster_path}`}
+                      alt={original_title}
+                    />
+                  ) : (
+                    <img src={defaultImag} alt={original_title} width="200" />
+                  )}
+                </div>
+                <div className="Movie__information">
+                  <h2 className="Movie__title">
+                    {original_title} ({realeseYear})
+                  </h2>
+                  <p className="Movie__score">
+                    User Score: {Math.round(popularity)}%
+                  </p>
+                  <h2>Overview</h2>
+                  <p className="Movie__overview">{overview}</p>
+
+                  <ul className="Movie__genres">
+                    Genres :
+                    {genres &&
+                      genres.map(genre => (
+                        <li key={genre.id}> - {genre.name}</li>
+                      ))}
+                  </ul>
+                </div>
+              </div>
+              <div className="Line"></div>
+              <ul className="Information">
+                Additional information :
+                <li>
+                  <NavLink
+                    to={`${match.url}/cast`}
+                    className="Information__link"
+                    activeClassName="Information__active"
+                  >
+                    Cast
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to={`${match.url}/reviews`}
+                    className="Information__link"
+                    activeClassName="Information__active"
+                  >
+                    Rewiews
+                  </NavLink>
+                </li>
+              </ul>
             </div>
-            <h2>Overview</h2>
-            <p>{overview}</p>
-            <ul>Genres</ul>
-            {genres &&
-              genres.map(genre => <li key={genre.id}>{genre.name}</li>)}
-            <ul>
-              Additional information
-              <li>
-                <Link to={`${match.url}/cast`}>Cast</Link>
-              </li>
-              <li>
-                <Link to={`${match.url}/reviews`}>Rewiews</Link>
-              </li>
-            </ul>
             <Route
               path={`${match.path}/cast`}
               render={props => {

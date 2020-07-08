@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moviesApi from '../services/movies-api';
 import NoRewievs from '../components/NoReview';
+import '../styles/review.scss';
 
 class Rewiews extends Component {
   state = {
@@ -20,11 +21,11 @@ class Rewiews extends Component {
     return (
       <>
         {reviews.length > 0 ? (
-          <ul>
+          <ul className="Review">
             {reviews.map(review => (
-              <li key={review.id}>
-                <h3>Author: {review.author}</h3>
-                <p>{review.content}</p>
+              <li key={review.id} className="Review__item">
+                <h3 className="Review__author">Author: {review.author}</h3>
+                <p className="Review__content">{review.content}</p>
               </li>
             ))}
           </ul>
