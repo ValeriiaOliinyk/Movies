@@ -1,0 +1,9 @@
+@import 'styles/shared.scss';
+
+.Line {
+  max-width: 100%;
+  height: 2px;
+  background-color: $main-color;
+  margin: auto;
+  margin-top: 80px;
+}

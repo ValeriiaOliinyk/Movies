@@ -13,6 +13,7 @@
   transform: scale(0.7);
 
   &:hover {
+    outline: none;
     background-color: $hover-color;
   }
 }

@@ -39,24 +39,6 @@ a:hover {
   color: $hover-color;
 }
 
-.Item:first-child {
-  margin-left: 60px;
-}
-
-.Item + .Item {
-  margin-left: 60px;
-}
-
-.NavLink {
-  font-size: 28px;
-  color: $main-color;
-  font-weight: 600;
-}
-
-.NavLink--active {
-  color: $text-color;
-}
-
 .Title {
   text-align: center;
   font-size: 40px;

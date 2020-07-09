@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import moviesApi from '../services/movies-api';
 import NoRewievs from '../components/NoReview';
+import Review from '../components/Review';
+import PropTypes from 'prop-types';
 import '../styles/review.scss';
 
 class Rewiews extends Component {
+  static defaultProps = {
+    reviews: [],
+  };
+
+  static propTypes = {
+    reviews: PropTypes.array,
+  };
+
   state = {
     reviews: [],
   };
@@ -24,8 +34,7 @@ class Rewiews extends Component {
           <ul className="Review">
             {reviews.map(review => (
               <li key={review.id} className="Review__item">
-                <h3 className="Review__author">Author: {review.author}</h3>
-                <p className="Review__content">{review.content}</p>
+                <Review {...review} />
               </li>
             ))}
           </ul>

@@ -1,16 +1,28 @@
 import React, { Component } from 'react';
-import { NavLink, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import moviesApi from '../services/movies-api';
-import defaultImag from '../images/no-image.jpg';
 import Error from '../components/Error';
 import IconButton from '../components/IconButton';
-import { ReactComponent as BackIcon } from '../images/arrow.svg';
 import Cast from './Cast';
 import Rewiews from './Reviews';
+import MovieInfo from '../components/MovieInfo';
+import MovieNavigation from '../components/MovieNavigation';
+import MovieImages from '../components/MovieImages';
+import Line from '../components/Line';
+import { ReactComponent as BackIcon } from '../images/arrow.svg';
+import PropTypes from 'prop-types';
 import routes from '../routes';
 import '../styles/movie.scss';
 
 class MovieDetailsPage extends Component {
+  static defaultProps = {
+    genres: [],
+  };
+
+  static propTypes = {
+    genres: PropTypes.array,
+  };
+
   state = {
     poster_path: null,
     original_title: null,
@@ -57,6 +69,14 @@ class MovieDetailsPage extends Component {
 
     const { match } = this.props;
 
+    const options = {
+      overview,
+      popularity,
+      realeseYear,
+      original_title,
+      poster_path,
+    };
+
     return (
       <>
         {error ? (
@@ -68,25 +88,9 @@ class MovieDetailsPage extends Component {
                 <BackIcon width="40" fill="white" />
               </IconButton>
               <div className="Movie__box">
-                <div className="Movie__image">
-                  {poster_path ? (
-                    <img
-                      src={`https://image.tmdb.org/t/p/original${poster_path}`}
-                      alt={original_title}
-                    />
-                  ) : (
-                    <img src={defaultImag} alt={original_title} width="200" />
-                  )}
-                </div>
+                <MovieImages {...options} />
                 <div className="Movie__information">
-                  <h2 className="Movie__title">
-                    {original_title} ({realeseYear})
-                  </h2>
-                  <p className="Movie__score">
-                    User Score: {Math.round(popularity)}%
-                  </p>
-                  <h2>Overview</h2>
-                  <p className="Movie__overview">{overview}</p>
+                  <MovieInfo {...options} />
                   <ul className="Movie__genres">
                     Genres :
                     {genres &&
@@ -96,28 +100,8 @@ class MovieDetailsPage extends Component {
                   </ul>
                 </div>
               </div>
-              <div className="Line"></div>
-              <ul className="Information">
-                Additional information :
-                <li>
-                  <NavLink
-                    to={`${match.url}/cast`}
-                    className="Information__link"
-                    activeClassName="Information__active"
-                  >
-                    Cast
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to={`${match.url}/reviews`}
-                    className="Information__link"
-                    activeClassName="Information__active"
-                  >
-                    Rewiews
-                  </NavLink>
-                </li>
-              </ul>
+              <Line />
+              <MovieNavigation />
             </div>
             <Route
               path={`${match.path}/cast`}

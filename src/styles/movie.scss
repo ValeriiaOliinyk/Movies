@@ -5,31 +5,8 @@
   margin: auto;
 }
 
-.Movie__title {
-  text-align: center;
-  font-weight: 700;
-}
-
 .Movie__box {
   margin-top: 20px;
-}
-
-.Movie__score {
-  margin-top: 20px;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.Movie__overview {
-  text-align: justify;
-}
-
-.Line {
-  max-width: 100%;
-  height: 2px;
-  background-color: $main-color;
-  margin: auto;
-  margin-top: 80px;
 }
 
 .Movie__genres {
@@ -38,35 +15,9 @@
   font-weight: 600;
 }
 
-.Information {
-  font-size: 20px;
-  font-weight: 700;
-  text-align: center;
-  width: 250px;
-  height: 100px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin: auto;
-  margin-top: 30px;
-}
-
-.Information__link {
-  color: $main-color;
-  font-size: 24px;
-}
-
-.Information__active {
-  color: $text-color;
-}
-
 @media screen and (min-width: 767px) {
   .Movie__box {
     display: flex;
-  }
-
-  .Movie__image {
-    width: 40%;
   }
 
   .Movie__information {
