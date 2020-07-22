@@ -19,6 +19,7 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
+    localStorage.removeItem('film');
     moviesApi
       .fetchMovies()
       .then(results => this.setState({ films: results }))

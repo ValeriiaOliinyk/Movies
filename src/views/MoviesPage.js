@@ -16,10 +16,18 @@ class MoviesPage extends Component {
     error: null,
   };
 
+  componentDidMount() {
+    const getFilm = localStorage.getItem('film');
+    if (getFilm) {
+      this.setState({ searchMovie: getFilm });
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchMovie !== this.state.searchMovie) {
       this.fetchMovies();
     }
+    localStorage.setItem('film', this.state.searchMovie);
   }
 
   onChangeValue = value => {
