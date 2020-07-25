@@ -22,7 +22,7 @@ const MovieNavigation = ({ match }) => {
           className="Information__link"
           activeClassName="Information__active"
         >
-          Rewiews
+          Reviews
         </NavLink>
       </li>
     </ul>
