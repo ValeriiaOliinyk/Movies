@@ -3,13 +3,16 @@ import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './MovieNavigation.scss';
 
-const MovieNavigation = ({ match }) => {
+const MovieNavigation = ({ match, location }) => {
   return (
     <ul className="Information">
       Additional information :
       <li>
         <NavLink
-          to={`${match.url}/cast`}
+          to={{
+            pathname: `${match.url}/cast`,
+            state: location.state,
+          }}
           className="Information__link"
           activeClassName="Information__active"
         >
@@ -18,7 +21,10 @@ const MovieNavigation = ({ match }) => {
       </li>
       <li>
         <NavLink
-          to={`${match.url}/reviews`}
+          to={{
+            pathname: `${match.url}/reviews`,
+            state: location.state,
+          }}
           className="Information__link"
           activeClassName="Information__active"
         >
